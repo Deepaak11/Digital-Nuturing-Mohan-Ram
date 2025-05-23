@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - Local Community Event Portal</title>
+    
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- External CSS -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-lg">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="index.html">
+                <i class="bi bi-calendar-event me-2"></i>Community Events
+            </a>
+            
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="events.html">Events</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="register.html">Register</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="feedback.html">Feedback</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="video.html">Videos</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <section class="bg-primary text-white py-5">
+        <div class="container">
+            <h1 class="display-4 fw-bold">Event Registration</h1>
+            <p class="lead">Join our community events and make new connections</p>
+        </div>
+    </section>
+
+    <!-- Registration Form -->
+    <div class="container my-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="card shadow-lg">
+                    <div class="card-header bg-gradient bg-primary text-white">
+                        <h3 class="card-title mb-0">
+                            <i class="bi bi-person-plus me-2"></i>Register for Event
+                        </h3>
+                    </div>
+                    <div class="card-body p-5">
+                        <form id="registrationForm" novalidate>
+                            <!-- Personal Information -->
+                            <div class="row mb-4">
+                                <div class="col-md-6">
+                                    <div class="form-floating">
+                                        <input type="text" class="form-control" id="firstName" 
+                                               placeholder="First Name" required autofocus>
+                                        <label for="firstName">First Name *</label>
+                                        <div class="invalid-feedback">
+                                            Please provide a valid first name.
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-floating">
+                                        <input type="text" class="form-control" id="lastName" 
+                                               placeholder="Last Name" required>
+                                        <label for="lastName">Last Name *</label>
+                                        <div class="invalid-feedback">
+                                            Please provide a valid last name.
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Contact Information -->
+                            <div class="row mb-4">
+                                <div class="col-md-6">
+                                    <div class="form-floating">
+                                        <input type="email" class="form-control" id="email" 
+                                               placeholder="name@example.com" required>
+                                        <label for="email">Email Address *</label>
+                                        <div class="invalid-feedback">
+                                            Please provide a valid email address.
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-floating">
+                                        <input type="tel" class="form-control" id="phone" 
+                                               placeholder="Phone Number" required
+                                               onblur="validatePhone(this)">
+                                        <label for="phone">Phone Number *</label>
+                                        <div class="invalid-feedback">
+                                            Please provide a valid phone number (10 digits).
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Event Selection -->
+                            <div class="row mb-4">
+                                <div class="col-md-6">
+                                    <div class="form-floating">
+                                        <select class="form-select" id="eventType" required 
+                                                onchange="updateEventFee(this)">
+                                            <option value="">Choose an event...</option>
+                                            <option value="music" data-fee="25">Music Festival - $25</option>
+                                            <option value="sports" data-fee="15">Sports Day - $15</option>
+                                            <option value="food" data-fee="30">Food Fair - $30</option>
+                                            <option value="workshop" data-fee="20">Workshop - $20</option>
+                                            <option value="art" data-fee="18">Art Exhibition - $18</option>
+                                        </select>
+                                        <label for="eventType">Select Event *</label>
+                                        <div class="invalid-feedback">
+                                            Please select an event.
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-floating">
+                                        <input type="date" class="form-control" id="eventDate" required>
+                                        <label for="eventDate">Preferred Date *</label>
+                                        <div class="invalid-feedback">
+                                            Please select a valid date.
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Event Fee Display -->
+                            <div class="mb-4">
+                                <div class="input-group">
+                                    <span class="input-group-text">
+                                        <i class="bi bi-currency-dollar"></i>
+                                    </span>
+                                    <div class="form-floating">
+                                        <input type="number" class="form-control" id="eventFee" readonly>
+                                        <label for="eventFee">Event Fee</label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Number of Participants -->
+                            <div class="mb-4">
+                                <label for="participants" class="form-label">Number of Participants</label>
+                                <input type="range" class="form-range" id="participants" 
+                                       min="1" max="10" value="1" 
+                                       oninput="updateParticipantCount(this)">
+                                <div class="d-flex justify-content-between">
+                                    <span>1</span>
+                                    <span id="participantCount" class="fw-bold">1 person</span>
+                                    <span>10</span>
+                                </div>
+                            </div>
+
+                            <!-- Special Requirements -->
+                            <div class="mb-4">
+                                <div class="form-floating">
+                                    <textarea class="form-control" id="specialRequirements" 
+                                              placeholder="Any special requirements..." 
+                                              style="height: 100px"
+                                              onkeyup="trackTextareaInput(this)"></textarea>
+                                    <label for="specialRequirements">Special Requirements (Optional)</label>
+                                </div>
+                                <div class="form-text">
+                                    <span id="charCount">0</span> / 500 characters
+                                </div>
+                            </div>
+
+                            <!-- Checkboxes -->
+                            <div class="mb-4">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="newsletter" value="yes">
+                                    <label class="form-check-label" for="newsletter">
+                                        Subscribe to newsletter for event updates
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="terms" required>
+                                    <label class="form-check-label" for="terms">
+                                        I agree to the <a href="#" class="text-primary">Terms and Conditions</a> *
+                                    </label>
+                                    <div class="invalid-feedback">
+                                        You must agree to the terms and conditions.
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Submit Button -->
+                            <div class="d-grid gap-2">
+                                <button type="submit" class="btn btn-primary btn-lg" 
+                                        onclick="confirmRegistration(event)">
+                                    <i class="bi bi-check-circle me-2"></i>Register Now
+                                </button>
+                                <button type="reset" class="btn btn-outline-secondary">
+                                    <i class="bi bi-arrow-clockwise me-2"></i>Reset Form
+                                </button>
+                            </div>
+
+                            <!-- Output for confirmation -->
+                            <output id="registrationOutput" class="d-block mt-4"></output>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Login Form -->
+    <div class="container my-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-6">
+                <div class="card shadow">
+                    <div class="card-header bg-secondary text-white">
+                        <h4 class="card-title mb-0">
+                            <i class="bi bi-box-arrow-in-right me-2"></i>Already Registered? Login
+                        </h4>
+                    </div>
+                    <div class="card-body">
+                        <form id="loginForm">
+                            <div class="form-floating mb-3">
+                                <input type="email" class="form-control" id="loginEmail" 
+                                       placeholder="name@example.com" required>
+                                <label for="loginEmail">Email Address</label>
+                            </div>
+                            <div class="form-floating mb-3">
+                                <input type="password" class="form-control" id="loginPassword" 
+                                       placeholder="Password" required>
+                                <label for="loginPassword">Password</label>
+                            </div>
+                            <div class="form-check mb-3">
+                                <input class="form-check-input" type="checkbox" id="rememberMe">
+                                <label class="form-check-label" for="rememberMe">
+                                    Remember me
+                                </label>
+                            </div>
+                            <div class="d-grid">
+                                <button type="submit" class="btn btn-secondary">
+                                    <i class="bi bi-box-arrow-in-right me-2"></i>Login
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 mb-4">
+                    <h5 class="fw-bold">Community Events</h5>
+                    <p class="text-muted">Bringing communities together through amazing events and experiences.</p>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <h5 class="fw-bold">Quick Links</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="index.html" class="text-muted text-decoration-none">Home</a></li>
+                        <li><a href="events.html" class="text-muted text-decoration-none">Browse Events</a></li>
+                        <li><a href="feedback.html" class="text-muted text-decoration-none">Feedback</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <h5 class="fw-bold">Follow Us</h5>
+                    <div class="social-links">
+                        <a href="#" class="text-white me-3 fs-4"><i class="bi bi-facebook"></i></a>
+                        <a href="#" class="text-white me-3 fs-4"><i class="bi bi-twitter"></i></a>
+                        <a href="#" class="text-white me-3 fs-4"><i class="bi bi-instagram"></i></a>
+                        <a href="#" class="text-white fs-4"><i class="bi bi-linkedin"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap 5 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Custom JS -->
+    <script src="main.js"></script>
+
+    <!-- Page-specific JavaScript -->
+    <script>
+        // Set minimum date to today
+        document.getElementById('eventDate').min = new Date().toISOString().split('T')[0];
+
+        // Form validation
+        document.getElementById('registrationForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            if (this.checkValidity()) {
+                // Form is valid, process registration
+                saveRegistration();
+            } else {
+                // Form is invalid, show validation
+                this.classList.add('was-validated');
+            }
+        });
+
+        // Before unload warning for unsaved form
+        let formModified = false;
+        document.getElementById('registrationForm').addEventListener('input', function() {
+            formModified = true;
+        });
+
+        window.addEventListener('beforeunload', function(e) {
+            if (formModified) {
+                const confirmationMessage = 'You have unsaved changes. Are you sure you want to leave?';
+                e.returnValue = confirmationMessage;
+                return confirmationMessage;
+            }
+        });
+
+        // Update participant count display
+        function updateParticipantCount(slider) {
+            const count = slider.value;
+            document.getElementById('participantCount').textContent = count + (count == 1 ? ' person' : ' people');
+        }
+
+        // Track textarea input
+        function trackTextareaInput(textarea) {
+            const charCount = textarea.value.length;
+            document.getElementById('charCount').textContent = charCount;
+            
+            if (charCount > 500) {
+                textarea.value = textarea.value.substring(0, 500);
+                document.getElementById('charCount').textContent = '500';
+            }
+        }
+
+        // Save registration
+        function saveRegistration() {
+            const formData = new FormData(document.getElementById('registrationForm'));
+            const registration = Object.fromEntries(formData.entries());
+            
+            // Save to localStorage
+            localStorage.setItem('userRegistration', JSON.stringify(registration));
+            
+            // Show success message
+            document.getElementById('registrationOutput').innerHTML = 
+                '<div class="alert alert-success"><i class="bi bi-check-circle me-2"></i>Registration successful! Welcome to our community.</div>';
+            
+            formModified = false;
+        }
+    </script>
+</body>
+</html>

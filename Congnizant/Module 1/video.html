@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Videos - Local Community Event Portal</title>
+    
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- External CSS -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-lg">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="index.html">
+                <i class="bi bi-calendar-event me-2"></i>Community Events
+            </a>
+            
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="events.html">Events</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="register.html">Register</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="feedback.html">Feedback</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="video.html">Videos</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <section class="bg-info text-white py-5">
+        <div class="container">
+            <h1 class="display-4 fw-bold">Event Videos & Highlights</h1>
+            <p class="lead">Watch highlights from our amazing community events</p>
+        </div>
+    </section>
+
+    <!-- Featured Video Section -->
+    <div class="container my-5">
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="card shadow-lg">
+                    <div class="card-header bg-gradient bg-info text-white">
+                        <h3 class="card-title mb-0">
+                            <i class="bi bi-play-circle me-2"></i>Featured: Community Music Festival 2024
+                        </h3>
+                    </div>
+                    <div class="card-body p-0">
+                        <!-- Main Video -->
+                        <div class="video-container position-relative">
+                            <video id="featuredVideo" 
+                                   class="w-100" 
+                                   controls 
+                                   poster="https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=800&h=450&fit=crop&auto=format"
+                                   oncanplay="videoReadyToPlay(this)"
+                                   onplay="trackVideoPlay(this)"
+                                   onpause="trackVideoPause(this)"
+                                   onended="trackVideoEnd(this)">
+                                <source src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4" type="video/mp4">
+                                <source src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.webm" type="video/webm">
+                                Your browser does not support the video tag.
+                            </video>
+                            
+                            <!-- Video Status Overlay -->
+                            <div id="videoStatus" class="position-absolute top-0 start-0 m-3">
+                                <!-- Status messages will appear here -->
+                            </div>
+                        </div>
+                        
+                        <div class="p-4">
+                            <h5 class="fw-bold">Community Music Festival 2024 - Highlights</h5>
+                            <p class="text-muted mb-3">
+                                Experience the best moments from our annual music festival featuring local artists, 
+                                food vendors, and community performances. This event brought together over 2,000 
+                                community members for a day of music and celebration.
+                            </p>
+                            
+                            <!-- Video Controls -->
+                            <div class="video-controls d-flex gap-2 flex-wrap">
+                                <button class="btn btn-outline-primary btn-sm" onclick="changePlaybackSpeed(0.5)">
+                                    <i class="bi bi-speedometer2 me-1"></i>0.5x
+                                </button>
+                                <button class="btn btn-outline-primary btn-sm" onclick="changePlaybackSpeed(1)">
+                                    <i class="bi bi-speedometer2 me-1"></i>1x
+                                </button>
+                                <button class="btn btn-outline-primary btn-sm" onclick="changePlaybackSpeed(1.5)">
+                                    <i class="bi bi-speedometer2 me-1"></i>1.5x
+                                </button>
+                                <button class="btn btn-outline-primary btn-sm" onclick="changePlaybackSpeed(2)">
+                                    <i class="bi bi-speedometer2 me-1"></i>2x
+                                </button>
+                                <button class="btn btn-outline-secondary btn-sm" onclick="toggleFullscreen()">
+                                    <i class="bi bi-fullscreen me-1"></i>Fullscreen
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Video Statistics -->
+                <div class="mt-4">
+                    <div class="row text-center">
+                        <div class="col-md-3 mb-3">
+                            <div class="bg-light p-3 rounded">
+                                <i class="bi bi-eye fs-3 text-primary"></i>
+                                <h5 class="mt-2 mb-0" id="viewCount">1,250</h5>
+                                <small class="text-muted">Views</small>
+                            </div>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <div class="bg-light p-3 rounded">
+                                <i class="bi bi-hand-thumbs-up fs-3 text-success"></i>
+                                <h5 class="mt-2 mb-0">98</h5>
+                                <small class="text-muted">Likes</small>
+                            </div>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <div class="bg-light p-3 rounded">
+                                <i class="bi bi-share fs-3 text-info"></i>
+                                <h5 class="mt-2 mb-0">45</h5>
+                                <small class="text-muted">Shares</small>
+                            </div>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <div class="bg-light p-3 rounded">
+                                <i class="bi bi-clock fs-3 text-warning"></i>
+                                <h5 class="mt-2 mb-0">5:32</h5>
+                                <small class="text-muted">Duration</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Sidebar -->
+            <div class="col-lg-4">
+                <!-- Video Playlist -->
+                <div class="card shadow">
+                    <div class="card-header bg-secondary text-white">
+                        <h5 class="card-title mb-0">
+                            <i class="bi bi-collection-play me-2"></i>More Event Videos
+                        </h5>
+                    </div>
+                    <div class="card-body p-0">
+                        <div class="list-group list-group-flush">
+                            <a href="#" class="list-group-item list-group-item-action" 
+                               onclick="loadVideo('sports', this)">
+                                <div class="d-flex align-items-center">
+                                    <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=80&h=60&fit=crop&auto=format" 
+                                         alt="Sports Day" class="rounded me-3">
+                                    <div>
+                                        <h6 class="mb-1">Annual Sports Day</h6>
+                                        <small class="text-muted">3:45 duration</small>
+                                    </div>
+                                </div>
+                            </a>
+                            
+                            <a href="#" class="list-group-item list-group-item-action" 
+                               onclick="loadVideo('food', this)">
+                                <div class="d-flex align-items-center">
+                                    <img src="https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=80&h=60&fit=crop&auto=format" 
+                                         alt="Food Fair" class="rounded me-3">
+                                    <div>
+                                        <h6 class="mb-1">Community Food Fair</h6>
+                                        <small class="text-muted">4:22 duration</small>
+                                    </div>
+                                </div>
+                            </a>
+                            
+                            <a href="#" class="list-group-item list-group-item-action" 
+                               onclick="loadVideo('art', this)">
+                                <div class="d-flex align-items-center">
+                                    <img src="https://images.unsplash.com/photo-1541961017774-22349e4a1262?w=80&h=60&fit=crop&auto=format" 
+                                         alt="Art Exhibition" class="rounded me-3">
+                                    <div>
+                                        <h6 class="mb-1">Local Art Exhibition</h6>
+                                        <small class="text-muted">2:18 duration</small>
+                                    </div>
+                                </div>
+                            </a>
+                            
+                            <a href="#" class="list-group-item list-group-item-action" 
+                               onclick="loadVideo('workshop', this)">
+                                <div class="d-flex align-items-center">
+                                    <img src="https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=80&h=60&fit=crop&auto=format" 
+                                         alt="Workshop" class="rounded me-3">
+                                    <div>
+                                        <h6 class="mb-1">Skill Building Workshop</h6>
+                                        <small class="text-muted">6:15 duration</small>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Event Calendar Widget -->
+                <div class="card shadow mt-4">
+                    <div class="card-header bg-warning text-dark">
+                        <h5 class="card-title mb-0">
+                            <i class="bi bi-calendar-week me-2"></i>Upcoming Events
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="upcoming-event mb-3 p-3 border-start border-primary border-4">
+                            <h6 class="fw-bold mb-1">Winter Holiday Market</h6>
+                            <small class="text-muted">
+                                <i class="bi bi-calendar me-1"></i>December 15, 2024<br>
+                                <i class="bi bi-geo-alt me-1"></i>Community Center
+                            </small>
+                        </div>
+                        
+                        <div class="upcoming-event mb-3 p-3 border-start border-success border-4">
+                            <h6 class="fw-bold mb-1">New Year Celebration</h6>
+                            <small class="text-muted">
+                                <i class="bi bi-calendar me-1"></i>December 31, 2024<br>
+                                <i class="bi bi-geo-alt me-1"></i>Main Square
+                            </small>
+                        </div>
+                        
+                        <div class="text-center">
+                            <a href="events.html" class="btn btn-outline-primary btn-sm">
+                                View All Events
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Video Gallery -->
+    <div class="container my-5">
+        <h3 class="text-center mb-4">Video Gallery</h3>
+        <div class="row" id="videoGallery">
+            <!-- Video thumbnails will be populated by JavaScript -->
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 mb-4">
+                    <h5 class="fw-bold">Community Events</h5>
+                    <p class="text-muted">Bringing communities together through amazing events and experiences.</p>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <h5 class="fw-bold">Quick Links</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="index.html" class="text-muted text-decoration-none">Home</a></li>
+                        <li><a href="events.html" class="text-muted text-decoration-none">Browse Events</a></li>
+                        <li><a href="register.html" class="text-muted text-decoration-none">Register</a></li>
+                        <li><a href="feedback.html" class="text-muted text-decoration-none">Feedback</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <h5 class="fw-bold">Follow Us</h5>
+                    <div class="social-links">
+                        <a href="#" class="text-white me-3 fs-4"><i class="bi bi-facebook"></i></a>
+                        <a href="#" class="text-white me-3 fs-4"><i class="bi bi-twitter"></i></a>
+                        <a href="#" class="text-white me-3 fs-4"><i class="bi bi-instagram"></i></a>
+                        <a href="#" class="text-white fs-4"><i class="bi bi-linkedin"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap 5 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Custom JS -->
+    <script src="main.js"></script>
+
+    <!-- Page-specific JavaScript -->
+    <script>
+        let currentVideo = null;
+        let viewCount = 1250;
+
+        // Video event handlers
+        function videoReadyToPlay(video) {
+            console.log('Video ready to play:', video.src);
+            showVideoStatus('Video ready to play', 'success');
+            currentVideo = video;
+        }
+
+        function trackVideoPlay(video) {
+            console.log('Video started playing:', video.currentTime);
+            showVideoStatus('Playing...', 'info');
+            
+            // Increment view count
+            viewCount++;
+            document.getElementById('viewCount').textContent = viewCount.toLocaleString();
+        }
+
+        function trackVideoPause(video) {
+            console.log('Video paused at:', video.currentTime);
+            showVideoStatus('Paused', 'warning');
+        }
+
+        function trackVideoEnd(video) {
+            console.log('Video ended');
+            showVideoStatus('Video ended', 'success');
+        }
+
+        function showVideoStatus(message, type = 'info') {
+            const statusDiv = document.getElementById('videoStatus');
+            const alertClass = `alert alert-${type} alert-dismissible fade show`;
+            
+            statusDiv.innerHTML = `
+                <div class="${alertClass}" role="alert">
+                    <i class="bi bi-info-circle me-2"></i>${message}
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="alert"></button>
+                </div>
+            `;
+            
+            // Auto-hide after 3 seconds
+            setTimeout(() => {
+                const alert = statusDiv.querySelector('.alert');
+                if (alert) {
+                    const bsAlert = new bootstrap.Alert(alert);
+                    bsAlert.close();
+                }
+            }, 3000);
+        }
+
+        // Video control functions
+        function changePlaybackSpeed(speed) {
+            if (currentVideo) {
+                currentVideo.playbackRate = speed;
+                showVideoStatus(`Playback speed changed to ${speed}x`, 'info');
+            }
+        }
+
+        function toggleFullscreen() {
+            if (currentVideo) {
+                if (currentVideo.requestFullscreen) {
+                    currentVideo.requestFullscreen();
+                } else if (currentVideo.webkitRequestFullscreen) {
+                    currentVideo.webkitRequestFullscreen();
+                } else if (currentVideo.msRequestFullscreen) {
+                    currentVideo.msRequestFullscreen();
+                }
+            }
+        }
+
+        // Load different videos
+        function loadVideo(eventType, element) {
+            const videos = {
+                'sports': {
+                    src: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4',
+                    title: 'Annual Sports Day Highlights',
+                    description: 'Action-packed highlights from our community sports day featuring various competitions and activities.'
+                },
+                'food': {
+                    src: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
+                    title: 'Community Food Fair',
+                    description: 'Discover the delicious food vendors and cooking demonstrations from our food fair event.'
+                },
+                'art': {
+                    src: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4',
+                    title: 'Local Art Exhibition',
+                    description: 'Tour through our local art exhibition featuring talented community artists and their works.'
+                },
+                'workshop': {
+                    src: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4',
+                    title: 'Skill Building Workshop',
+                    description: 'Learn new skills and techniques from our community workshop sessions and expert instructors.'
+                }
+            };
+
+            const videoData = videos[eventType];
+            if (videoData) {
+                const video = document.getElementById('featuredVideo');
+                video.src = videoData.src;
+                video.load();
+                
+                // Update title and description
+                document.querySelector('.card-title').innerHTML = 
+                    `<i class="bi bi-play-circle me-2"></i>Featured: ${videoData.title}`;
+                document.querySelector('.card-body h5').textContent = videoData.title;
+                document.querySelector('.card-body p').textContent = videoData.description;
+                
+                // Update active state in playlist
+                document.querySelectorAll('.list-group-item').forEach(item => {
+                    item.classList.remove('active');
+                });
+                element.classList.add('active');
+            }
+        }
+
+        // Initialize video gallery
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeVideoGallery();
+        });
+
+        function initializeVideoGallery() {
+            const gallery = document.getElementById('videoGallery');
+            const videos = [
+                { title: 'Summer Festival', thumb: 'https://via.placeholder.com/300x200/ff6b6b/ffffff?text=Summer+Festival' },
+                { title: 'Art Workshop', thumb: 'https://via.placeholder.com/300x200/4ecdc4/ffffff?text=Art+Workshop' },
+                { title: 'Sports Tournament', thumb: 'https://via.placeholder.com/300x200/45b7d1/ffffff?text=Sports+Tournament' },
+                { title: 'Music Concert', thumb: 'https://via.placeholder.com/300x200/96ceb4/ffffff?text=Music+Concert' },
+                { title: 'Food Festival', thumb: 'https://via.placeholder.com/300x200/ffeaa7/333333?text=Food+Festival' },
+                { title: 'Community Garden', thumb: 'https://via.placeholder.com/300x200/dda0dd/ffffff?text=Community+Garden' }
+            ];
+
+            videos.forEach(video => {
+                const videoCard = `
+                    <div class="col-lg-4 col-md-6 mb-4">
+                        <div class="card shadow-sm h-100">
+                            <div class="position-relative">
+                                <img src="${video.thumb}" class="card-img-top" alt="${video.title}">
+                                <div class="position-absolute top-50 start-50 translate-middle">
+                                    <i class="bi bi-play-circle-fill text-white fs-1 opacity-75"></i>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <h6 class="card-title">${video.title}</h6>
+                                <button class="btn btn-outline-primary btn-sm">
+                                    <i class="bi bi-play me-1"></i>Watch Now
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                gallery.innerHTML += videoCard;
+            });
+        }
+    </script>
+</body>
+</html>

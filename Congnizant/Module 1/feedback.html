@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feedback - Local Community Event Portal</title>
+    
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- External CSS -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-lg">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="index.html">
+                <i class="bi bi-calendar-event me-2"></i>Community Events
+            </a>
+            
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="events.html">Events</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="register.html">Register</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="feedback.html">Feedback</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="video.html">Videos</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <section class="bg-success text-white py-5">
+        <div class="container">
+            <h1 class="display-4 fw-bold">Your Feedback Matters</h1>
+            <p class="lead">Help us improve our community events with your valuable feedback</p>
+        </div>
+    </section>
+
+    <!-- Feedback Form -->
+    <div class="container my-5">
+        <div class="row">
+            <!-- Main Feedback Form -->
+            <div class="col-lg-8">
+                <div class="card shadow-lg">
+                    <div class="card-header bg-gradient bg-success text-white">
+                        <h3 class="card-title mb-0">
+                            <i class="bi bi-chat-square-heart me-2"></i>Event Feedback Form
+                        </h3>
+                    </div>
+                    <div class="card-body p-5">
+                        <form id="feedbackForm" novalidate>
+                            <!-- Event Selection -->
+                            <div class="mb-4">
+                                <label for="eventAttended" class="form-label fw-semibold">
+                                    Which event did you attend? *
+                                </label>
+                                <select class="form-select" id="eventAttended" required>
+                                    <option value="">Select an event...</option>
+                                    <option value="music-festival">Music Festival 2024</option>
+                                    <option value="food-fair">Community Food Fair</option>
+                                    <option value="sports-day">Annual Sports Day</option>
+                                    <option value="art-exhibition">Local Art Exhibition</option>
+                                    <option value="workshop">Community Workshop</option>
+                                </select>
+                                <div class="invalid-feedback">
+                                    Please select an event you attended.
+                                </div>
+                            </div>
+
+                            <!-- Rating Section -->
+                            <div class="mb-4">
+                                <label class="form-label fw-semibold">Overall Rating *</label>
+                                <div class="rating-container d-flex gap-2 align-items-center">
+                                    <div class="star-rating" data-rating="0">
+                                        <i class="bi bi-star rating-star" data-value="1"></i>
+                                        <i class="bi bi-star rating-star" data-value="2"></i>
+                                        <i class="bi bi-star rating-star" data-value="3"></i>
+                                        <i class="bi bi-star rating-star" data-value="4"></i>
+                                        <i class="bi bi-star rating-star" data-value="5"></i>
+                                    </div>
+                                    <span id="ratingText" class="text-muted">Click to rate</span>
+                                </div>
+                                <input type="hidden" id="rating" name="rating" required>
+                                <div class="invalid-feedback">
+                                    Please provide a rating.
+                                </div>
+                            </div>
+
+                            <!-- Detailed Feedback -->
+                            <div class="mb-4">
+                                <label for="detailedFeedback" class="form-label fw-semibold">
+                                    Tell us about your experience *
+                                </label>
+                                <textarea class="form-control" id="detailedFeedback" rows="5" 
+                                          placeholder="What did you like? What could be improved?" 
+                                          required onkeyup="trackFeedbackInput(this)"></textarea>
+                                <div class="form-text">
+                                    <span id="feedbackCharCount">0</span> / 1000 characters
+                                </div>
+                                <div class="invalid-feedback">
+                                    Please provide detailed feedback.
+                                </div>
+                            </div>
+
+                            <!-- Contact Information -->
+                            <div class="row mb-4">
+                                <div class="col-md-6">
+                                    <label for="feedbackName" class="form-label fw-semibold">Your Name</label>
+                                    <input type="text" class="form-control" id="feedbackName" 
+                                           placeholder="Enter your name (optional)">
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="feedbackEmail" class="form-label fw-semibold">Email Address</label>
+                                    <input type="email" class="form-control" id="feedbackEmail" 
+                                           placeholder="your.email@example.com"
+                                           onblur="validateFeedbackEmail(this)">
+                                    <div class="invalid-feedback">
+                                        Please provide a valid email address.
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Specific Areas -->
+                            <div class="mb-4">
+                                <label class="form-label fw-semibold">Please rate the following aspects:</label>
+                                
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label for="organizationRating" class="form-label">Organization</label>
+                                        <select class="form-select" id="organizationRating">
+                                            <option value="">Rate organization...</option>
+                                            <option value="5">Excellent</option>
+                                            <option value="4">Very Good</option>
+                                            <option value="3">Good</option>
+                                            <option value="2">Fair</option>
+                                            <option value="1">Poor</option>
+                                        </select>
+                                    </div>
+                                    
+                                    <div class="col-md-6 mb-3">
+                                        <label for="venueRating" class="form-label">Venue</label>
+                                        <select class="form-select" id="venueRating">
+                                            <option value="">Rate venue...</option>
+                                            <option value="5">Excellent</option>
+                                            <option value="4">Very Good</option>
+                                            <option value="3">Good</option>
+                                            <option value="2">Fair</option>
+                                            <option value="1">Poor</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Recommendations -->
+                            <div class="mb-4">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="recommendEvent">
+                                    <label class="form-check-label" for="recommendEvent">
+                                        I would recommend this event to friends and family
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="attendAgain">
+                                    <label class="form-check-label" for="attendAgain">
+                                        I would attend similar events in the future
+                                    </label>
+                                </div>
+                            </div>
+
+                            <!-- Submit Button -->
+                            <div class="d-grid gap-2">
+                                <button type="submit" class="btn btn-success btn-lg">
+                                    <i class="bi bi-send me-2"></i>Submit Feedback
+                                </button>
+                                <button type="reset" class="btn btn-outline-secondary" onclick="resetFeedbackForm()">
+                                    <i class="bi bi-arrow-clockwise me-2"></i>Reset Form
+                                </button>
+                            </div>
+
+                            <!-- Output for confirmation -->
+                            <output id="feedbackOutput" class="d-block mt-4"></output>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sidebar -->
+            <div class="col-lg-4">
+                <!-- Contact Information -->
+                <div class="card shadow mb-4">
+                    <div class="card-body">
+                        <h5 class="card-title fw-bold">
+                            <i class="bi bi-telephone me-2"></i>Contact Us
+                        </h5>
+                        <p class="card-text">
+                            Have questions or need immediate assistance? Reach out to us directly.
+                        </p>
+                        <ul class="list-unstyled">
+                            <li class="mb-2">
+                                <i class="bi bi-envelope me-2 text-primary"></i>
+                                feedback@communityevents.com
+                            </li>
+                            <li class="mb-2">
+                                <i class="bi bi-phone me-2 text-primary"></i>
+                                (555) 123-4567
+                            </li>
+                            <li class="mb-2">
+                                <i class="bi bi-clock me-2 text-primary"></i>
+                                Mon-Fri: 9AM-5PM
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Recent Testimonials -->
+                <div class="card shadow">
+                    <div class="card-body">
+                        <h5 class="card-title fw-bold">
+                            <i class="bi bi-chat-quote me-2"></i>Recent Testimonials
+                        </h5>
+                        
+                        <div class="testimonial mb-3 p-3 bg-light rounded">
+                            <div class="rating-display mb-2">
+                                <i class="bi bi-star-fill text-warning"></i>
+                                <i class="bi bi-star-fill text-warning"></i>
+                                <i class="bi bi-star-fill text-warning"></i>
+                                <i class="bi bi-star-fill text-warning"></i>
+                                <i class="bi bi-star-fill text-warning"></i>
+                            </div>
+                            <p class="mb-2">"Amazing community event! Great organization and wonderful people."</p>
+                            <small class="text-muted">- Sarah M.</small>
+                        </div>
+                        
+                        <div class="testimonial mb-3 p-3 bg-light rounded">
+                            <div class="rating-display mb-2">
+                                <i class="bi bi-star-fill text-warning"></i>
+                                <i class="bi bi-star-fill text-warning"></i>
+                                <i class="bi bi-star-fill text-warning"></i>
+                                <i class="bi bi-star-fill text-warning"></i>
+                                <i class="bi bi-star text-warning"></i>
+                            </div>
+                            <p class="mb-2">"Well organized event with great activities for the whole family."</p>
+                            <small class="text-muted">- John D.</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 mb-4">
+                    <h5 class="fw-bold">Community Events</h5>
+                    <p class="text-muted">Bringing communities together through amazing events and experiences.</p>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <h5 class="fw-bold">Quick Links</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="index.html" class="text-muted text-decoration-none">Home</a></li>
+                        <li><a href="events.html" class="text-muted text-decoration-none">Browse Events</a></li>
+                        <li><a href="register.html" class="text-muted text-decoration-none">Register</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <h5 class="fw-bold">Follow Us</h5>
+                    <div class="social-links">
+                        <a href="#" class="text-white me-3 fs-4"><i class="bi bi-facebook"></i></a>
+                        <a href="#" class="text-white me-3 fs-4"><i class="bi bi-twitter"></i></a>
+                        <a href="#" class="text-white me-3 fs-4"><i class="bi bi-instagram"></i></a>
+                        <a href="#" class="text-white fs-4"><i class="bi bi-linkedin"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap 5 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Custom JS -->
+    <script src="main.js"></script>
+
+    <!-- Page-specific JavaScript -->
+    <script>
+        let currentRating = 0;
+        
+        // Initialize star rating
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeStarRating();
+        });
+
+        function initializeStarRating() {
+            const stars = document.querySelectorAll('.rating-star');
+            const ratingInput = document.getElementById('rating');
+            const ratingText = document.getElementById('ratingText');
+            
+            stars.forEach(star => {
+                star.addEventListener('click', function() {
+                    currentRating = parseInt(this.dataset.value);
+                    ratingInput.value = currentRating;
+                    updateStarDisplay(currentRating);
+                    updateRatingText(currentRating);
+                });
+                
+                star.addEventListener('mouseover', function() {
+                    const hoverRating = parseInt(this.dataset.value);
+                    updateStarDisplay(hoverRating);
+                });
+            });
+            
+            document.querySelector('.star-rating').addEventListener('mouseleave', function() {
+                updateStarDisplay(currentRating);
+            });
+        }
+
+        function updateStarDisplay(rating) {
+            const stars = document.querySelectorAll('.rating-star');
+            stars.forEach((star, index) => {
+                if (index < rating) {
+                    star.classList.remove('bi-star');
+                    star.classList.add('bi-star-fill', 'text-warning');
+                } else {
+                    star.classList.remove('bi-star-fill', 'text-warning');
+                    star.classList.add('bi-star');
+                }
+            });
+        }
+
+        function updateRatingText(rating) {
+            const ratingTexts = {
+                1: 'Poor',
+                2: 'Fair', 
+                3: 'Good',
+                4: 'Very Good',
+                5: 'Excellent'
+            };
+            document.getElementById('ratingText').textContent = ratingTexts[rating] || 'Click to rate';
+        }
+
+        // Track feedback input
+        function trackFeedbackInput(textarea) {
+            const charCount = textarea.value.length;
+            document.getElementById('feedbackCharCount').textContent = charCount;
+            
+            if (charCount > 1000) {
+                textarea.value = textarea.value.substring(0, 1000);
+                document.getElementById('feedbackCharCount').textContent = '1000';
+            }
+        }
+
+        // Validate feedback email
+        function validateFeedbackEmail(input) {
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (input.value && !emailRegex.test(input.value)) {
+                input.classList.add('is-invalid');
+            } else {
+                input.classList.remove('is-invalid');
+            }
+        }
+
+        // Form submission
+        document.getElementById('feedbackForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            if (currentRating === 0) {
+                alert('Please provide a rating before submitting.');
+                return;
+            }
+            
+            if (this.checkValidity()) {
+                saveFeedback();
+            } else {
+                this.classList.add('was-validated');
+            }
+        });
+
+        function saveFeedback() {
+            const formData = new FormData(document.getElementById('feedbackForm'));
+            const feedback = Object.fromEntries(formData.entries());
+            feedback.rating = currentRating;
+            feedback.timestamp = new Date().toISOString();
+            
+            // Save to localStorage
+            const existingFeedback = JSON.parse(localStorage.getItem('userFeedback') || '[]');
+            existingFeedback.push(feedback);
+            localStorage.setItem('userFeedback', JSON.stringify(existingFeedback));
+            
+            // Show success message
+            document.getElementById('feedbackOutput').innerHTML = 
+                '<div class="alert alert-success"><i class="bi bi-check-circle me-2"></i>Thank you for your feedback! It helps us improve our events.</div>';
+        }
+
+        function resetFeedbackForm() {
+            currentRating = 0;
+            updateStarDisplay(0);
+            updateRatingText(0);
+            document.getElementById('feedbackCharCount').textContent = '0';
+            document.getElementById('feedbackOutput').innerHTML = '';
+            document.getElementById('feedbackForm').classList.remove('was-validated');
+        }
+    </script>
+</body>
+</html>

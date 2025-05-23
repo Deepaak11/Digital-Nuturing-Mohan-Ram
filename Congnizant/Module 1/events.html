@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Events - Local Community Event Portal</title>
+    
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- External CSS -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-lg">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="index.html">
+                <i class="bi bi-calendar-event me-2"></i>Community Events
+            </a>
+            
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="events.html">Events</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="register.html">Register</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="feedback.html">Feedback</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="video.html">Videos</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <section class="bg-primary text-white py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-9">
+                    <h1 class="display-4 fw-bold">Upcoming Events</h1>
+                    <p class="lead">Discover exciting events happening in your community</p>
+                </div>
+                <div class="col-md-3 text-end">
+                    <button class="btn btn-outline-light" data-bs-toggle="modal" data-bs-target="#filterModal">
+                        <i class="bi bi-funnel me-2"></i>Filter Events
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <div class="container my-5">
+        <div class="row">
+            <!-- Sidebar -->
+            <div class="col-md-3 d-none d-md-block">
+                <div class="bg-light p-4 rounded shadow">
+                    <h5 class="fw-bold mb-3">Event Categories</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2">
+                            <a href="#" class="text-decoration-none" onclick="filterEvents('all')">
+                                <i class="bi bi-calendar-event me-2"></i>All Events
+                            </a>
+                        </li>
+                        <li class="mb-2">
+                            <a href="#" class="text-decoration-none" onclick="filterEvents('music')">
+                                <i class="bi bi-music-note me-2"></i>Music & Arts
+                            </a>
+                        </li>
+                        <li class="mb-2">
+                            <a href="#" class="text-decoration-none" onclick="filterEvents('sports')">
+                                <i class="bi bi-trophy me-2"></i>Sports
+                            </a>
+                        </li>
+                        <li class="mb-2">
+                            <a href="#" class="text-decoration-none" onclick="filterEvents('food')">
+                                <i class="bi bi-cup-hot me-2"></i>Food & Drink
+                            </a>
+                        </li>
+                        <li class="mb-2">
+                            <a href="#" class="text-decoration-none" onclick="filterEvents('workshop')">
+                                <i class="bi bi-tools me-2"></i>Workshops
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Event Cards -->
+            <div class="col-md-9">
+                <div id="eventsContainer" class="row">
+                    <!-- Events will be populated by JavaScript -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Event Details Modal -->
+    <div class="modal fade" id="eventModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="eventModalTitle">Event Details</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body" id="eventModalBody">
+                    <!-- Event details will be populated by JavaScript -->
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <a href="register.html" class="btn btn-primary">Register Now</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Filter Modal -->
+    <div class="modal fade" id="filterModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Filter Events</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="categoryFilter" class="form-label">Category</label>
+                        <select class="form-select" id="categoryFilter">
+                            <option value="all">All Categories</option>
+                            <option value="music">Music & Arts</option>
+                            <option value="sports">Sports</option>
+                            <option value="food">Food & Drink</option>
+                            <option value="workshop">Workshops</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="dateFilter" class="form-label">Date Range</label>
+                        <select class="form-select" id="dateFilter">
+                            <option value="all">All Dates</option>
+                            <option value="today">Today</option>
+                            <option value="week">This Week</option>
+                            <option value="month">This Month</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" onclick="applyFilters()">Apply Filters</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Event Session Details Accordion -->
+    <div class="container my-5">
+        <h3 class="text-center mb-4">Event Session Details</h3>
+        <div class="accordion" id="sessionAccordion">
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingOne">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne">
+                        Morning Sessions (9:00 AM - 12:00 PM)
+                    </button>
+                </h2>
+                <div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#sessionAccordion">
+                    <div class="accordion-body">
+                        <strong>Morning sessions</strong> include various workshops, fitness activities, and community meetings. These sessions are perfect for early risers and families with children.
+                        <ul class="mt-2">
+                            <li>Yoga & Meditation (9:00 AM)</li>
+                            <li>Community Garden Workshop (10:00 AM)</li>
+                            <li>Kids Art & Craft (11:00 AM)</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingTwo">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo">
+                        Afternoon Sessions (1:00 PM - 5:00 PM)
+                    </button>
+                </h2>
+                <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#sessionAccordion">
+                    <div class="accordion-body">
+                        <strong>Afternoon sessions</strong> feature more active and social events. Great for networking and skill building.
+                        <ul class="mt-2">
+                            <li>Business Networking Lunch (1:00 PM)</li>
+                            <li>Photography Workshop (2:30 PM)</li>
+                            <li>Community Sports (4:00 PM)</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingThree">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree">
+                        Evening Sessions (6:00 PM - 9:00 PM)
+                    </button>
+                </h2>
+                <div id="collapseThree" class="accordion-collapse collapse" data-bs-parent="#sessionAccordion">
+                    <div class="accordion-body">
+                        <strong>Evening sessions</strong> are perfect for entertainment, cultural events, and social gatherings after work hours.
+                        <ul class="mt-2">
+                            <li>Live Music Performances (6:00 PM)</li>
+                            <li>Cultural Food Festival (7:00 PM)</li>
+                            <li>Movie Night Under Stars (8:00 PM)</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white py-5 mt-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 mb-4">
+                    <h5 class="fw-bold">Community Events</h5>
+                    <p class="text-muted">Bringing communities together through amazing events and experiences.</p>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <h5 class="fw-bold">Quick Links</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="index.html" class="text-muted text-decoration-none">Home</a></li>
+                        <li><a href="register.html" class="text-muted text-decoration-none">Register</a></li>
+                        <li><a href="feedback.html" class="text-muted text-decoration-none">Feedback</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <h5 class="fw-bold">Follow Us</h5>
+                    <div class="social-links">
+                        <a href="#" class="text-white me-3 fs-4"><i class="bi bi-facebook"></i></a>
+                        <a href="#" class="text-white me-3 fs-4"><i class="bi bi-twitter"></i></a>
+                        <a href="#" class="text-white me-3 fs-4"><i class="bi bi-instagram"></i></a>
+                        <a href="#" class="text-white fs-4"><i class="bi bi-linkedin"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap 5 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Custom JS -->
+    <script src="main.js"></script>
+
+    <!-- Page-specific JavaScript -->
+    <script>
+        // Load events when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            loadEvents();
+        });
+
+        // Filter events by category
+        function filterEvents(category) {
+            const events = getEventsData();
+            const filteredEvents = category === 'all' ? events : events.filter(event => event.category === category);
+            displayEvents(filteredEvents);
+        }
+
+        // Apply modal filters
+        function applyFilters() {
+            const categoryFilter = document.getElementById('categoryFilter').value;
+            const dateFilter = document.getElementById('dateFilter').value;
+            
+            filterEvents(categoryFilter);
+            
+            // Close modal
+            const modal = bootstrap.Modal.getInstance(document.getElementById('filterModal'));
+            modal.hide();
+        }
+    </script>
+</body>
+</html>
